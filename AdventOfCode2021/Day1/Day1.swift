@@ -12,10 +12,10 @@ func parse_input(input: String) -> [String] {
     return input.components(separatedBy: "\n")
 }
 func part1(input: String) -> Int {
-    let number_list = parse_input(input: input)
+    let numberList = parse_input(input: input)
     var counter = 0
-    for index in 0...(number_list.count - 2) {
-        if Int(number_list[index]) ?? 0 < Int(number_list[index+1]) ?? 0 {
+    for index in 0...(numberList.count - 2) {
+        if Int(numberList[index]) ?? 0 < Int(numberList[index+1]) ?? 0 {
             counter += 1
         }
     }
@@ -23,18 +23,18 @@ func part1(input: String) -> Int {
 }
 
 func part2(input: String) -> Int {
-    let number_list = parse_input(input: input)
+    let numberList = parse_input(input: input)
     var counter = -1
-    var prev_sliding_window = 0
-    for index in 1...(number_list.count - 2) {
-        let prev = Int(number_list[index-1]) ?? 0
-        let current = Int(number_list[index]) ?? 0
-        let next = Int(number_list[index+1]) ?? 0
-        let sliding_window = prev + current + next
-        if sliding_window > prev_sliding_window {
+    var prevSlidingWindow = 0
+    for index in 1...(numberList.count - 2) {
+        let prev = Int(numberList[index-1]) ?? 0
+        let current = Int(numberList[index]) ?? 0
+        let next = Int(numberList[index+1]) ?? 0
+        let slidingWindow = prev + current + next
+        if slidingWindow > prevSlidingWindow {
             counter += 1
         }
-        prev_sliding_window = sliding_window
+        prevSlidingWindow = slidingWindow
     }
     return counter
 }

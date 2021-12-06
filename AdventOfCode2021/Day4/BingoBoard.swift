@@ -51,21 +51,21 @@ class Bingo {
     }
 
     func diagonal_bingo() -> Bool {
-        var left_to_right = true
-        var right_to_left = true
+        var leftToRight = true
+        var rightToLeft = true
         for idx in 0...boardSize-1 {
             if board[idx][idx].1 == false {
-                left_to_right = false
+                leftToRight = false
                 break
             }
         }
         for idx in 0...boardSize-1 {
             if board[idx][boardSize-idx-1].1 == false {
-                right_to_left = false
+                rightToLeft = false
                 break
             }
         }
-        return left_to_right || right_to_left
+        return leftToRight || rightToLeft
     }
 
     func apply_piece(piece: String) -> Bool {

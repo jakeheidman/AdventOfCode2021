@@ -13,12 +13,12 @@ struct Command {
 }
 
 func parse_day2_input() -> [Command] {
-    let input_list = day2_input.components(separatedBy: "\n") //["forward 2", "up 3",]
+    let inputList = day2_input.components(separatedBy: "\n") //["forward 2", "up 3",]
     
-    return input_list.map {
-                            let cmd_distance_pair = $0.components(separatedBy: " ");
-                            let cmd = cmd_distance_pair[0];
-                            let distance = Int(cmd_distance_pair[1]) ?? 0;
+    return inputList.map {
+                            let cmdDistancePair = $0.components(separatedBy: " ");
+                            let cmd = cmdDistancePair[0];
+                            let distance = Int(cmdDistancePair[1]) ?? 0;
                             return Command(direction: cmd, distance: distance)
         
                             }
