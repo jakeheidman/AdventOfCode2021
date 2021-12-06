@@ -80,12 +80,66 @@ func create_points_in_between(p1: Point, p2: Point) -> [Point] {
         }
     }
     else {
-        return []
+        /*
+         case 1: pa.x < pb.x && pa.y < pb.y
+         (0,0) -> (8,8)
+         (8,8) -> (0,0)
+         */
+        if (p1.x < p2.x && p1.y < p2.y) || (p1.x > p2.x && p1.y > p2.y) {
+            var lowerPoint = p1.x < p2.x ? p1 : p2
+            let higherX = p1.x < p2.x ? p2.x : p1.x
+            while lowerPoint.x != higherX - 1 {
+                let newPoint = Point(x: lowerPoint.x + 1, y: lowerPoint.y + 1)
+                points.append(newPoint)
+                lowerPoint = newPoint
+            }
+        }
+        
+        /*
+         case 2: p1.x > p2.x && p1.y < p2.y
+         (8,0) -> (0,8)
+         (0,8) -> (8,0)
+         */
+        else if (p1.x > p2.x && p1.y < p2.y) || (p1.x < p2.x && p1.y > p2.y) {
+            var lowerXHigherYPoint = p1.x < p2.x ? p1 : p2
+            let higherX = p1.x < p2.x ? p2.x : p1.x
+            let lowerY = p1.y < p2.y ? p1.y : p2.y
+            while lowerXHigherYPoint.x != higherX - 1 && lowerXHigherYPoint.y != lowerY + 1 {
+                let newPoint = Point(x: lowerXHigherYPoint.x + 1, y: lowerXHigherYPoint.y - 1)
+                points.append(newPoint)
+                lowerXHigherYPoint = newPoint
+            }
+        }
+        
     }
+    
     return points
 }
 
 func day5_part1() -> Int {
+    let lines: [Line] = parse_day5()
+    var intersectingPoints = 0
+    var pointStore: [Point:Int] = [:]
+    for line in lines {
+        let allPointsOnLine = create_points_in_between(p1: line.p1, p2: line.p2)
+        for point in allPointsOnLine {
+            if let _ = pointStore[point] {
+                pointStore[point]! += 1
+            }
+            else {
+                pointStore[point] = 1
+            }
+        }
+    }
+    for key in pointStore.keys {
+        if pointStore[key]! > 1 {
+            intersectingPoints += 1
+        }
+    }
+    return intersectingPoints
+}
+
+func day5_part2() -> Int {
     let lines: [Line] = parse_day5()
     var intersectingPoints = 0
     var pointStore: [Point:Int] = [:]
