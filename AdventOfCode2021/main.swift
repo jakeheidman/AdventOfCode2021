@@ -7,3 +7,4 @@
 
 import Foundation
 
+print(day4_part2())

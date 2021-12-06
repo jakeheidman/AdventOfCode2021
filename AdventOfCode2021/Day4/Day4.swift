@@ -6,6 +6,14 @@
 //
 
 import Foundation
+extension String {
+    func removingLeadingSpaces() -> String {
+        guard let index = firstIndex(where: { !CharacterSet(charactersIn: String($0)).isSubset(of: .whitespaces) }) else {
+            return self
+        }
+        return String(self[index...])
+    }
+}
 
 let test_case = """
 7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
@@ -50,7 +58,8 @@ func parse_day4() -> ([String], [Bingo])  {
  */
 func parse_board_input(input: String) -> [[(String, Bool)]] {
     let lines = input.components(separatedBy: "\n")
-    let removeDoubleSpaces: [String] = lines.map({$0.replacingOccurrences(of: "  ", with: " ")})
+    let removeLeadingWhitespace = lines.map({$0.removingLeadingSpaces()})
+    let removeDoubleSpaces: [String] = removeLeadingWhitespace.map({$0.replacingOccurrences(of: "  ", with: " ")})
     let rawBoard: [[String]] = removeDoubleSpaces.map({$0.components(separatedBy: " ")})
     let finishedBoard = rawBoard.map({$0.map({($0, false)})})
     return finishedBoard
@@ -65,6 +74,28 @@ func day4_part1() -> Int {
             if board.apply_piece(piece: move) && board.is_bingo() {
                 return board.calculate_score(numberCalled: move)
             }
+        }
+    }
+    return 0
+}
+
+func day4_part2() -> Int {
+    let bingoGame = parse_day4()
+    let moveList = bingoGame.0
+    var boards = bingoGame.1
+    for move in moveList {
+        var counter = 0
+        for board in boards {
+            if board.apply_piece(piece: move) && board.is_bingo() {
+                if boards.count != 1 {
+                    boards.remove(at: counter)
+                    counter -= 1
+                }
+                else {
+                    return board.calculate_score(numberCalled: move)
+                }
+            }
+            counter += 1
         }
     }
     return 0
