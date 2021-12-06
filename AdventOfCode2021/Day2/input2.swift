@@ -6,6 +6,14 @@
 //
 
 import Foundation
+let test_case2 = """
+forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2
+"""
 let day2_input = """
 forward 9
 down 3
