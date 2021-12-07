@@ -74,20 +74,16 @@ func calculate_static_fuel(crabs: [Int], individual: Int) -> Int {
 func calculate_dynamic_fuel(crabs: [Int], individual: Int) -> Int {
     var fuel = 0
     for c in crabs {
-        fuel += dynamicAlignCost(original: c, alignTo: individual)
+        fuel += cost_align_dynamic(original: c, alignTo: individual)
     }
     return fuel
 }
 
-func dynamicAlignCost(original: Int, alignTo: Int) -> Int {
-    var totalCost = 0
-    var stepCost = 1
-    var smaller = original > alignTo ? alignTo : original
-    let bigger = original > alignTo ? original : alignTo
-    while smaller != bigger {
-        smaller += 1
-        totalCost += stepCost
-        stepCost += 1
-    }
-    return totalCost
+/*
+ The fuel cost can be modeled as the infinite series of natural number terms (1,2,3,etc) that span the distance
+ between the two submarines
+ */
+func cost_align_dynamic(original: Int, alignTo: Int) -> Int {
+    let abs = abs(original-alignTo)
+    return (abs * (abs+1))/2
 }
