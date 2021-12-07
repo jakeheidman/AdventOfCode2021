@@ -7,4 +7,5 @@
 
 import Foundation
 
-print(day4_part2())
+print(day7_part2())
+print(day7_part2_efficient())
